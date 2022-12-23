@@ -1,0 +1,16 @@
+.gil_sa_container {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.gil_sa_sidebar {
+  width: 20%;
+  background-color: transparent;
+  /* box-shadow: 7px 10px 15px rgba(0, 0, 0, 0.4); */
+}
+.gil_sa_main {
+  flex-grow: 1;
+  background-color: #fafafa;
+  border-left: 1px solid #fafafa;
+}
