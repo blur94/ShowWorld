@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import Users from './SiteAdminMainComponents/Users';
+import Users from './SiteAdminMainComponents/Users/Users';
 
 export default function SiteAdminMain({ mainView, setMainView }) {
     // const [mainView, setMainView] = useState('users');

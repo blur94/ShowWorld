@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Table from '../../../templates/Gilead/Table';
-import Button from '../../../templates/Gilead/Button';
-import './Users/Users.css';
+import Table from '../../../../templates/Gilead/Table';
+import Button from '../../../../templates/Gilead/Button';
+import './Users.css';
 
 export default function Users() {
     const [users, setUsers] = useState([]);
