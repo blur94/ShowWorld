@@ -1,12 +1,16 @@
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import SiteAdmin from "./Site_Admin/SiteAdmin/SiteAdmin";
 import "./styles.css";
-import Button from "./templates/Gilead/Button";
-import Table from "./templates/Gilead/Table";
+
 
 export default function App() {
   return (
-    <div className="App">
-      <Table />
-      <Button title={'Submit'} />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path='/site-admin' element={<SiteAdmin />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
