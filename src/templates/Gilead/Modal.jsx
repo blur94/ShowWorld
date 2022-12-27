@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import Table from './Table';
 
-export default function Modal() {
+export default function AModal() {
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => {
         setIsOpen(true);

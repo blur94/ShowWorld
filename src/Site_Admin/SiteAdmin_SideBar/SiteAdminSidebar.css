@@ -1,4 +1,6 @@
 .gil_sa_sidebar_list_container {
+  position: sticky;
+  z-index: 100;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -23,4 +25,30 @@
 }
 .gil_sa_sidebar_list_container li span:first-child {
   margin-right: 7px;
+}
+.gil_sa_sidebar_list_container li span:first-child {
+  margin-right: 7px;
+}
+@media (max-width: 700px) {
+  .gil_sa_sidebar_list_container li span:last-child {
+    display: none;
+  }
+  .gil_sa_sidebar_list_container li span:first-child {
+    padding-right: .5rem;
+  }
+}
+@media (max-width: 850px) {
+  .gil_sa_sidebar_list_container li span:last-child {
+    font-size: .6rem;
+  }
+}
+@media (max-width: 1000px) {
+  .gil_sa_sidebar_list_container li span:last-child {
+    font-size: .7rem;
+  }
+}
+@media (max-width: 1200px) {
+  .gil_sa_sidebar_list_container li span:last-child {
+    font-size: .8rem;
+  }
 }

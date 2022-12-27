@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import Events from './SiteAdminMainComponents/Events/Events';
 import Users from './SiteAdminMainComponents/Users/Users';
 
 export default function SiteAdminMain({ mainView, setMainView }) {
@@ -27,6 +28,6 @@ export default function SiteAdminMain({ mainView, setMainView }) {
 //     return <div>Users</div>;
 // };
 
-const Events = () => {
-    return <div>Events</div>;
-};
+// const Events = () => {
+//     return <div>Events</div>;
+// };

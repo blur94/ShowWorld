@@ -1,0 +1,28 @@
+.action_container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.action_container .action_button {
+  padding: .5rem 1rem;
+}
+.gil-add-event {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 0;
+  padding-right: 10px;
+  background-color: #fff;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.4);
+} 
+.gil-add-event-modal-container {
+  /* width: calc(100% - (100% - 80%));
+  position: absolute;
+  left: 20%; */
+   display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: aqua;
+  /* position: absolute; */
+  /* z-index: 0; */
+}
