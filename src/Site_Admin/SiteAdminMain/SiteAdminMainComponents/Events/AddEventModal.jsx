@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
+import React, { useState } from "react";
+import Modal from "react-modal";
+import EventForm from "./EventForm";
 
 export default function AddEventModal() {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,23 +12,27 @@ export default function AddEventModal() {
         setIsOpen(false);
     };
 
+    const customStyles = {
+        content: {
+            width: "50%",
+            height: "80vh",
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)"
+        }
+    };
+
     return (
         <div>
             <button onClick={openModal}>Add Event</button>
-            <Modal
-                isOpen={isOpen}
-                onRequestClose={closeModal}
-                style={{
-                    content: {
-                        left: 'auto',
-                        right: '0',
-                        width: '75%',
-                        marginRight: '20px'
-                    },
-                }}
-                // className='gil-add-event-modal-container'
-            >
-                <div>Modal Content</div>
+            <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles} ariaHideApp={false}>
+                <div>
+                    <h2>Modal Content for Event</h2>
+                    <EventForm />
+                </div>
             </Modal>
         </div>
     );

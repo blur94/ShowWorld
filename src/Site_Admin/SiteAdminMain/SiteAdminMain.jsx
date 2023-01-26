@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Events from './SiteAdminMainComponents/Events/Events';
+import Movies from './SiteAdminMainComponents/Movies/Movies';
+import Theater from './SiteAdminMainComponents/Theater/Theater';
 import Users from './SiteAdminMainComponents/Users/Users';
 
 export default function SiteAdminMain({ mainView, setMainView }) {
@@ -13,6 +15,16 @@ export default function SiteAdminMain({ mainView, setMainView }) {
             case 'events':
                 return (
                     <Events />
+                );
+
+            case 'movies':
+                return (
+                    <Movies />
+                );
+
+            case 'theater':
+                return (
+                    <Theater />
                 );
 
 

@@ -35,13 +35,13 @@ export default function SiteAdminSidebar({ setMainView }) {
           </span>
           <span>Events</span>
         </li>
-        <li>
+        <li onClick={() => setMainView('movies')}>
           <span>
             <MdMovie />
           </span>
           <span>Movie</span>
         </li>
-        <li>
+        <li onClick={() => setMainView('theater')}>
           <span>
             <MdOutlineAdminPanelSettings />
           </span>

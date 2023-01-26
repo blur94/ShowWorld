@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from '../../../../templates/Gilead/Table';
 import Button from '../../../../templates/Gilead/Button';
-import './Events.css';
-import Modal from '../../../../templates/Gilead/Modal';
-import AddEventModal from './AddEventModal';
+import './Movies.css';
+import AddMoviesModal from './AddMoviesModal';
 
-export default function Events() {
-    const [events, setEvents] = useState([]);
+export default function Movies() {
+    const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const handleEdit = () => {
@@ -21,7 +20,7 @@ export default function Events() {
     const columns = [
         {
             name: 'S/N',
-            selector: row => <div className='first_col'>{row.id}</div>,
+            selector: row => row.id,
             sortable: true,
             width: '4.5rem',
         },
@@ -32,13 +31,8 @@ export default function Events() {
             width: '30%'
         },
         {
-            name: 'Completed',
-            selector: row => <span>{row.completed ? 'True' : 'False'}</span>,
-            sortable: true,
-        },
-        {
-            name: 'Posted By',
-            selector: row => row.userId,
+            name: 'Links',
+            selector: row => <a href={row.url}>Trailer</a>,
             sortable: true,
         },
         {
@@ -51,22 +45,22 @@ export default function Events() {
     ];
 
     useEffect(() => {
-        const getEvents = async () => {
-            await axios.get('https://jsonplaceholder.typicode.com/todos')
+        const getMovies = async () => {
+            await axios.get('https://jsonplaceholder.typicode.com/photos')
                 .then(response => {
-                    setEvents(response.data);
-                    console.log(events);
+                    setMovies(response.data);
+                    console.log(movies);
                 });
         };
-        getEvents();
+        getMovies();
     }, []);
 
     return (
         <>
             <div className='gil-add-event'>
-                <AddEventModal />
+                <AddMoviesModal />
             </div>
-            <Table data={events} columns={columns} title='Events Management' />
+            <Table data={movies} columns={columns} title='Movie Management' />
         </>
     );
 }
