@@ -66,7 +66,7 @@ export default function Events() {
             <div className='gil-add-event'>
                 <AddEventModal />
             </div>
-            <Table data={events} columns={columns} title='Events Management' />
+            <Table data={events} columns={columns} />
         </>
     );
 }

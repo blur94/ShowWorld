@@ -8,6 +8,7 @@ export default function Users() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    console.log('env: ', process.env.REACT_APP_FB_MESSAGING_SENDER_ID)
     const handleEdit = () => {
         console.log('Edit Button');
     };
@@ -66,7 +67,7 @@ export default function Users() {
 
     return (
         <>
-            <Table data={users} columns={columns} title='Users' />
+            <Table data={users} columns={columns} />
         </>
     );
 }

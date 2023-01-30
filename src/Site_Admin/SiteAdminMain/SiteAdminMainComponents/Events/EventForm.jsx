@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    listAll,
+    list,
+} from "firebase/storage";
+import { storage } from "../../../../templates/Gilead/Firebase";
+// '/src/templates/Gilead/Firebase.js'
+import { v4 } from "uuid";
 
 const initialValues = {
     title: "",
@@ -38,7 +48,7 @@ const validationSchema = Yup.object().shape({
     //     .test('fileFormat', 'Banner must be an image', value => value && value.type.startsWith('image/'))
     //     .required('An image is required'),
     thumbnails: Yup.array()
-        .of(Yup.mixed().test('fileType', 'Thumbnails must be images', value => value && value.type.startsWith('image/')))
+        .of(Yup.mixed().test('fileType', 'thumbnails must be images', value => value && value.type.startsWith('image/')))
         .required('At least one thumbnail is required'),
     compID: Yup.string()
         .required('Company ID is required')
@@ -50,32 +60,110 @@ export default function EventForm() {
     const [formError, setFormError] = useState(false);
     const [thumbnails, setThumbnails] = useState([]);
     const [banner, setBanner] = useState(null);
+    const [thumbnailsUrl, setThumbnailsUrl] = useState([]);
+    const [bannerUrl, setBannerUrl] = useState(null);
 
+    // const handleThumbnailsChange = (event) => {
+    //     setThumbnails(Array.from(event.target.files));
+    //     console.log('inside onchange: ', thumbnails)
+    // };
     const handleThumbnailsChange = (event) => {
-        setThumbnails(event.target.files);
+        if (event.target.files.length) {
+            const files = Array.from(event.target.files);
+            setThumbnails(files);
+            console.log(files);
+        } else {
+            console.log('No thumbnails');
+        }
     };
 
     const handleBannerChange = (event) => {
         setBanner(event.target.files[0]);
     };
 
-    const handleSubmit = (values, { resetForm, setSubmitting }) => {
+    const uploadThumbnails = async () => {
+        const newThumbnails = thumbnails;
+        console.log('here in uploadthumbnails');
+        console.log('inside upload func: ', newThumbnails);
+        if (!newThumbnails || newThumbnails.length === 0) return [];
+        // if (!Array.isArray(thumbnails)) return;
+
+        const promises = newThumbnails.map(async (thumbnail, index) => {
+            const thumbnailRef = ref(storage, `showworld/thumbnails/${thumbnail.name + v4()}`);
+            const snapshot = await uploadBytes(thumbnailRef, thumbnail);
+            return await getDownloadURL(snapshot.ref);
+        });
+
+        const urls = await Promise.all(promises);
+        setThumbnailsUrl(urls);
+        return urls;
+    };
+
+    const uploadBanner = async () => {
+        if (!banner) return;
+        const bannerRef = ref(storage, `showworld/banner/${banner.name + v4()}`);
+        const snapshot = await uploadBytes(bannerRef, banner);
+        const url = await getDownloadURL(snapshot.ref);
+        setBannerUrl(url);
+        return url;
+    };
+
+    const handleSubmit = async (values, { resetForm, setSubmitting }) => {
         setFormSubmitting(true);
-        setTimeout(() => {
-            // Simulated API call
-            if (Math.random() < 0.5) {
-                console.log({...values, banner: banner, thumbnails: thumbnails})
-                alert(JSON.stringify({ ...values, banner: banner, thumbnails: thumbnails }, null, 2));
-                setFormError(false);
-                resetForm(initialValues);
-                setFormSubmitting(false);
-            } else {
-                setFormError(true);
-                setFormSubmitting(false);
-            }
+        setTimeout(async () => {
+            const bannerUrl = await uploadBanner();
+            const thumbnailsUrls = await uploadThumbnails();
+
+            const result = { ...values, banner: bannerUrl, thumbnails: thumbnailsUrls };
+            console.log('here before math.random()');
+            // if (Math.random() < 0.5) {
+            console.log(result);
+            alert(JSON.stringify(result, null, 2));
+            setFormError(false);
+            resetForm(initialValues);
+            setFormSubmitting(false);
+            // } else {
+            //     setFormError(true);
+            //     setFormSubmitting(false);
+            // }
             setSubmitting(false);
         }, 2000);
     };
+
+
+    // async function handleThumbnailsUpload(files) {
+    //     const formData = new FormData();
+    //     files.forEach((file, i) => {
+    //         formData.append(`file${i}`, file);
+    //     });
+    //     formData.append('upload_preset', 'YOUR_UPLOAD_PRESET');
+
+    //     try {
+    //         const res = await axios.post('https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload', formData);
+    //         const thumbnails = res.data.map(image => image.url);
+    //         setValues(values => ({
+    //             ...values,
+    //             thumbnails
+    //         }));
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
+
+    // async function handleBannerUpload(file) {
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+    //     formData.append('upload_preset', 'YOUR_UPLOAD_PRESET');
+
+    //     try {
+    //         const res = await axios.post('https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload', formData);
+    //         setBannerUrl(res.data.url);
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
+
+
 
     return (
         <div>
@@ -181,7 +269,7 @@ export default function EventForm() {
 
                         <div className="mb-3">
                             <label htmlFor="thumbnails" className="form-label">
-                                Thumbnails
+                                thumbnails
                             </label>
                             <input
                                 type="file"
