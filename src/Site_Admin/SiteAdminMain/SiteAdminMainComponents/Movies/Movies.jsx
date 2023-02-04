@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from '../../../../templates/Gilead/Table';
 import Button from '../../../../templates/Gilead/Button';
-import './Users.css';
+import './Movies.css';
+import AddMoviesModal from './AddMoviesModal';
 
-export default function Users() {
-    const [users, setUsers] = useState([]);
+export default function Movies() {
+    const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    console.log('env: ', process.env.REACT_APP_FB_MESSAGING_SENDER_ID)
     const handleEdit = () => {
         console.log('Edit Button');
     };
@@ -20,30 +20,20 @@ export default function Users() {
     const columns = [
         {
             name: 'S/N',
-            selector: row => <div className='first_col'>{row.id}</div>,
+            selector: row => row.id,
             sortable: true,
             width: '4.5rem',
         },
         {
-            name: 'Name',
-            selector: row => row.name,
+            name: 'Title',
+            selector: row => row.title,
             sortable: true,
+            width: '30%'
         },
         {
-            name: 'Email',
-            selector: row => row.email,
+            name: 'Links',
+            selector: row => <a href={row.url}>Trailer</a>,
             sortable: true,
-        },
-        {
-            name: 'Phone Number',
-            selector: row => row.phone,
-            sortable: true,
-        },
-        {
-            name: 'Website',
-            selector: row => row.website,
-            sortable: true,
-            width: '7rem'
         },
         {
             name: 'Action',
@@ -55,19 +45,22 @@ export default function Users() {
     ];
 
     useEffect(() => {
-        const getUsers = async () => {
-            await axios.get('https://jsonplaceholder.typicode.com/users')
+        const getMovies = async () => {
+            await axios.get('https://jsonplaceholder.typicode.com/photos')
                 .then(response => {
-                    setUsers(response.data);
-                    console.log(users);
+                    setMovies(response.data);
+                    console.log(movies);
                 });
         };
-        getUsers();
+        getMovies();
     }, []);
 
     return (
         <>
-            <Table data={users} columns={columns} />
+            <div className='gil-add-event'>
+                <AddMoviesModal />
+            </div>
+            <Table data={movies} columns={columns} title='Movie Management' />
         </>
     );
 }

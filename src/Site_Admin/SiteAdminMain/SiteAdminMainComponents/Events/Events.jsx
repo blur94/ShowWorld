@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from '../../../../templates/Gilead/Table';
 import Button from '../../../../templates/Gilead/Button';
-import './Users.css';
+import './Events.css';
+import Modal from '../../../../templates/Gilead/Modal';
+import AddEventModal from './AddEventModal';
 
-export default function Users() {
-    const [users, setUsers] = useState([]);
+export default function Events() {
+    const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    console.log('env: ', process.env.REACT_APP_FB_MESSAGING_SENDER_ID)
     const handleEdit = () => {
         console.log('Edit Button');
     };
@@ -25,25 +26,20 @@ export default function Users() {
             width: '4.5rem',
         },
         {
-            name: 'Name',
-            selector: row => row.name,
+            name: 'Title',
+            selector: row => row.title,
+            sortable: true,
+            width: '30%'
+        },
+        {
+            name: 'Completed',
+            selector: row => <span>{row.completed ? 'True' : 'False'}</span>,
             sortable: true,
         },
         {
-            name: 'Email',
-            selector: row => row.email,
+            name: 'Posted By',
+            selector: row => row.userId,
             sortable: true,
-        },
-        {
-            name: 'Phone Number',
-            selector: row => row.phone,
-            sortable: true,
-        },
-        {
-            name: 'Website',
-            selector: row => row.website,
-            sortable: true,
-            width: '7rem'
         },
         {
             name: 'Action',
@@ -55,19 +51,22 @@ export default function Users() {
     ];
 
     useEffect(() => {
-        const getUsers = async () => {
-            await axios.get('https://jsonplaceholder.typicode.com/users')
+        const getEvents = async () => {
+            await axios.get('https://jsonplaceholder.typicode.com/todos')
                 .then(response => {
-                    setUsers(response.data);
-                    console.log(users);
+                    setEvents(response.data);
+                    console.log(events);
                 });
         };
-        getUsers();
+        getEvents();
     }, []);
 
     return (
         <>
-            <Table data={users} columns={columns} />
+            <div className='gil-add-event'>
+                <AddEventModal />
+            </div>
+            <Table data={events} columns={columns} />
         </>
     );
 }

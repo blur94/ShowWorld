@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import Table from './Table';
 
-export default function AModal() {
+export default function AddTheaterModal() {
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => {
         setIsOpen(true);
@@ -14,12 +13,20 @@ export default function AModal() {
 
     return (
         <div>
-            <button onClick={openModal}>Open the modal</button>
+            <button onClick={openModal}>Add Theater</button>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={closeModal}
+                style={{
+                    content: {
+                        left: 'auto',
+                        right: '0',
+                        width: '75%',
+                        marginRight: '20px'
+                    },
+                }}
             >
-                <Table />
+                <div>Modal Content</div>
             </Modal>
         </div>
     );
