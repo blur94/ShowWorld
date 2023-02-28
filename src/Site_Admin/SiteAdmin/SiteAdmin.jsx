@@ -36,7 +36,7 @@ import {
   BookOnline,
   Report,
   AccountTree,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 import Users from '../SiteAdminMain/SiteAdminMainComponents/Users/Users';
 import Events from '../SiteAdminMain/SiteAdminMainComponents/Events/Events';
 import Theater from '../SiteAdminMain/SiteAdminMainComponents/Theater/Theater';
@@ -58,7 +58,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  // width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
@@ -91,48 +91,48 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
-);
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
 
 export default function SiteAdmin() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [appView, setAppView] = React.useState("Users");
+  const [appView, setAppView] = React.useState('Users');
 
   const sidebarList = [
-    "Users",
-    "Events",
-    "Movies",
-    "Theater Admin",
-    "Theater",
-    "Seating Rows",
-    "Class",
-    "Seat Blocking",
-    "Movie Schedule",
-    "Book Tickets",
-    "Location",
-    "News",
-    "Banner Ads",
-    "Newsletter",
-    "Booking",
-    "Reports",
-    "Site Settings",
-    "CMS"];
-
+    'Users',
+    'Events',
+    'Movies',
+    'Theater Admin',
+    'Theater',
+    'Seating Rows',
+    'Class',
+    'Seat Blocking',
+    'Movie Schedule',
+    'Book Tickets',
+    'Location',
+    'News',
+    'Banner Ads',
+    'Newsletter',
+    'Booking',
+    'Reports',
+    'Site Settings',
+    'CMS',
+  ];
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -145,13 +145,13 @@ export default function SiteAdmin() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" color='secondary' open={open}>
+      <AppBar position='fixed' color='secondary' open={open}>
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
+            edge='start'
             sx={{
               marginRight: 5,
               ...(open && { display: 'none' }),
@@ -159,25 +159,27 @@ export default function SiteAdmin() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h3" noWrap component="div">
+          <Typography variant='h3' noWrap component='div'>
             {appView}
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant='permanent' open={open}>
         <DrawerHeader
-          sx={
-            {
-              display: "flex",
-              justifyContent: "space-between",
-            }
-          }
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
         >
-          <Typography variant="h5" color='secondary' noWrap component="div">
+          <Typography variant='h5' color='secondary' noWrap component='div'>
             Show World
           </Typography>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl' ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -199,39 +201,39 @@ export default function SiteAdmin() {
                     justifyContent: 'center',
                   }}
                 >
-                  {text === "Users" ? (
+                  {text === 'Users' ? (
                     <PeopleAltRounded color='secondary' />
-                  ) : text === "Events" ? (
+                  ) : text === 'Events' ? (
                     <EventRounded color='secondary' />
-                  ) : text === "Movies" ? (
+                  ) : text === 'Movies' ? (
                     <MovieCreationRounded color='secondary' />
-                  ) : text === "Seating Rows" ? (
+                  ) : text === 'Seating Rows' ? (
                     <EventSeatRounded color='secondary' />
-                  ) : text === "Theater" ? (
+                  ) : text === 'Theater' ? (
                     <TheatersRounded color='secondary' />
-                  ) : text === "Class" ? (
+                  ) : text === 'Class' ? (
                     <ClassRounded color='secondary' />
-                  ) : text === "Theater Admin" ? (
+                  ) : text === 'Theater Admin' ? (
                     <AdminPanelSettingsRounded color='secondary' />
-                  ) : text === "Seat Blocking" ? (
+                  ) : text === 'Seat Blocking' ? (
                     <Block color='secondary' />
-                  ) : text === "Movie Schedule" ? (
+                  ) : text === 'Movie Schedule' ? (
                     <Schedule color='secondary' />
-                  ) : text === "Book Tickets" ? (
+                  ) : text === 'Book Tickets' ? (
                     <ConfirmationNumber color='secondary' />
-                  ) : text === "Location" ? (
+                  ) : text === 'Location' ? (
                     <LocationOn color='secondary' />
-                  ) : text === "News" ? (
+                  ) : text === 'News' ? (
                     <Newspaper color='secondary' />
-                  ) : text === "Banner Ads" ? (
+                  ) : text === 'Banner Ads' ? (
                     <Feed color='secondary' />
-                  ) : text === "Reports" ? (
+                  ) : text === 'Reports' ? (
                     <Report color='secondary' />
-                  ) : text === "Site Settings" ? (
+                  ) : text === 'Site Settings' ? (
                     <ViewCarousel color='secondary' />
-                  ) : text === "CMS" ? (
+                  ) : text === 'CMS' ? (
                     <AccountTree color='secondary' />
-                  ) : text === "Booking" ? (
+                  ) : text === 'Booking' ? (
                     <BookOnline color='secondary' />
                   ) : (
                     <MailIcon color='secondary' />
@@ -242,13 +244,12 @@ export default function SiteAdmin() {
             </ListItem>
           ))}
         </List>
-
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component='main' sx={{ flexGrow: 1, py: 3 }}>
         {/* <DrawerHeader /> */}
-        {appView === "Users" ? (
+        {appView === 'Users' ? (
           <Users />
-        ) : appView === "Events" ? (
+        ) : appView === 'Events' ? (
           <Events />
         ) : (
           <Theater />

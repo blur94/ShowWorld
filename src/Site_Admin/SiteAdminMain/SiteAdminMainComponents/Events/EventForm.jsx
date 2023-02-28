@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import {
@@ -55,7 +56,7 @@ const validationSchema = Yup.object().shape({
         .min(3, 'Company ID must be at least 3 characters long'),
 });
 
-export default function EventForm() {
+export default function EventForm({ setIsOpen, getEvents }) {
     const [formSubmitting, setFormSubmitting] = useState(false);
     const [formError, setFormError] = useState(false);
     const [thumbnails, setThumbnails] = useState([]);
@@ -109,25 +110,24 @@ export default function EventForm() {
     };
 
     const handleSubmit = async (values, { resetForm, setSubmitting }) => {
-        setFormSubmitting(true);
-        setTimeout(async () => {
+        try {
+            setFormSubmitting(true);
             const bannerUrl = await uploadBanner();
             const thumbnailsUrls = await uploadThumbnails();
 
             const result = { ...values, banner: bannerUrl, thumbnails: thumbnailsUrls };
-            console.log('here before math.random()');
-            // if (Math.random() < 0.5) {
+            await axios.post("http://localhost:5000/events", result);
             console.log(result);
-            alert(JSON.stringify(result, null, 2));
             setFormError(false);
             resetForm(initialValues);
             setFormSubmitting(false);
-            // } else {
-            //     setFormError(true);
-            //     setFormSubmitting(false);
-            // }
+
             setSubmitting(false);
-        }, 2000);
+            setIsOpen(false);
+            getEvents()
+        } catch (error) {
+            console.log('error');
+        }
     };
 
 
@@ -244,7 +244,7 @@ export default function EventForm() {
                                 Duration
                             </label>
                             <Field
-                                type="text"
+                                type="number"
                                 id="duration"
                                 name="duration"
                                 className="form-control"

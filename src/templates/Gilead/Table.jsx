@@ -10,7 +10,7 @@ import { BiChevronUp } from 'react-icons/bi'
 export default function Table({ data, columns, title }) {
 
     return (
-        <>
+        <div>
             <h3>{title}</h3>
             <DataTable
                 columns={columns}
@@ -20,6 +20,6 @@ export default function Table({ data, columns, title }) {
                 sortIcon={<BiChevronUp />}
                 pagination
             />
-        </>
+        </div>
     );
 }
