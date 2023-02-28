@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
+
 import Table from '../../../../templates/Gilead/Table';
 import Button from '../../../../templates/Gilead/Button';
-import AddEventModal from './AddEventModal';
 import './Events.css';
+import Modal from '../../../../templates/Gilead/Modal';
+import AddEventModal from './AddEventModal';
 
 export default function Events() {
     const [events, setEvents] = useState([]);
@@ -17,21 +19,6 @@ export default function Events() {
     const handleDelete = () => {
         console.log('Delete Button');
     };
-
-    const url = 'http://localhost:5000/events';
-
-    const getEvents = async () => {
-        await axios.get(url)
-            .then(response => {
-                setEvents(response.data);
-            });
-        };
-
-    useEffect(() => {
-            getEvents();
-        }, []);
-
-        console.log(events);
 
     const columns = [
         {
@@ -47,26 +34,27 @@ export default function Events() {
         },
         {
             name: 'Description',
-            selector: row => <span title={row.description}>{row.description}</span>,
+            selector: row => row.description,
             sortable: true,
             width: '20rem'
         },
         {
-            name: 'Rating ',
+            name: 'Rating',
             selector: row => `${row.rating} / 10`,
             sortable: true,
+            width: '12rem'
         },
         {
             name: 'Duration',
             selector: row => `${row.duration} mins`,
             sortable: true,
-            width: '15rem'
+            width: '12rem'
         },
         {
             name: 'Created On',
-            selector: row => `${dayjs(row.createdAt).format('DD/MM/YYYY')}`,
+            selector: row => {dayjs(row.createdAt).format('DD/MM/YYYY')},
             sortable: true,
-            width: '15rem'
+            width: '12rem'
         },
         {
             name: 'Action',
@@ -78,11 +66,23 @@ export default function Events() {
         },
     ];
 
+    const url = 'http://localhost:5000/events';
+
+    useEffect(() => {
+        const getEvents = async () => {
+            await axios.get(url)
+                .then(response => {
+                    setEvents(response.data);
+                    console.log(events);
+                });
+        };
+        getEvents();
+    }, []);
 
     return (
-        <div>
-        <div className='gil-add-event'>
-                <AddEventModal getEvents={getEvents} />
+        <div className='event_container'>
+            <div className='gil-add-event'>
+                <AddEventModal />
             </div>
             <Table data={events} columns={columns} />
         </div>

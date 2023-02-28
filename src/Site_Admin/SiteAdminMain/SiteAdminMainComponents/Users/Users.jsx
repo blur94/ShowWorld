@@ -43,7 +43,7 @@ export default function Users() {
             name: 'Website',
             selector: row => row.website,
             sortable: true,
-            width: '7rem'
+            width: '15rem'
         },
         {
             name: 'Action',
@@ -51,6 +51,7 @@ export default function Users() {
                 <Button title='Edit' className='action_button' handleClick={handleEdit} />
                 <Button title='Delete' className='action_button' handleClick={handleDelete} />
             </div>,
+            width: '12rem'
         },
     ];
 

@@ -23,8 +23,8 @@ export default function SiteAdminSidebar({ setMainView }) {
   return (
     <div>
       <ul className="gil_sa_sidebar_list_container">
-        <li onClick={() => setMainView('users')}>
-          <span>
+        <li onClick={() => setMainView('users')} title='Users' >
+          <span title="Users" >
             <FiUsers />
           </span>
           <span>Users</span>
